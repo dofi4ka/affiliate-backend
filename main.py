@@ -7,7 +7,16 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
 
+from starlette.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 os.makedirs("data", exist_ok=True)
 conn = sqlite3.connect("data/campaigns.db", check_same_thread=False)
